@@ -135,6 +135,17 @@ def main(args):
                     group_name =  os.path.join(group_name, "v")
                 else:
                     raise NotImplementedError
+            elif args['flow_name'] == "hills":
+                if args["model"]["var_id"] == 0:
+                    group_name = os.path.join(group_name, "u")
+                elif args["model"]["var_id"] == 1:
+                    group_name =  os.path.join(group_name, "v")
+                elif args["model"]["var_id"] == 2:
+                    group_name =  os.path.join(group_name, "w")
+                elif args["model"]["var_id"] == 3:
+                    group_name =  os.path.join(group_name, "p")
+                else:
+                    raise NotImplementedError
             else:
                 assert args['flow_name'] in ["cavity", "TGV", "cylinder"]
                 if args["model"]["var_id"] == 0:
