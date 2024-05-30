@@ -389,13 +389,13 @@ class GNOT(nn.Module):
             x = block(x, z, pos)
         
         # output
-        out = self.out_mlp(x)
+        out = self.out_mlp(x) # [bs, h*w, output_size]
         
         if input_type == "grid":
-            out = out.reshape([bs, h, w, c])
+            out = out.reshape([bs, h, w, -1])
         else:
             assert input_type == "points"
-            out = out.reshape([bs, nx, c])
+            out = out.reshape([bs, nx, -1])
         
         return out
     
@@ -440,13 +440,13 @@ class GNOT(nn.Module):
             x = block(x, z, pos)
         
         # output
-        out = self.out_mlp(x) # [bs, h*w, c]
+        out = self.out_mlp(x) # [bs, h*w, output_size]
         
         if input_type == "grid":
-            out = out.reshape([bs, h, w, c])
+            out = out.reshape([bs, h, w, -1])
         else:
             assert input_type == "points"
-            out = out.reshape([bs, nx, c])
+            out = out.reshape([bs, nx, -1])
 
         # loss
         loss = loss_fn(out.reshape([bs, -1]), label.reshape([bs, -1]))
