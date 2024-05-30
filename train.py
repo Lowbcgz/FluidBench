@@ -262,7 +262,7 @@ def main(args):
                     "loss": min_val_loss,
                     "model_state_dict": model_state_dict,
                     "optimizer_state_dict": optimizer.state_dict()}, saved_path + "-latest.pt")
-        if (epoch + 1) % args["save_period"] == 0:
+        if (epoch + 1) % args["save_period"] == 0 or (epoch + 1) == args["epochs"]:
             print("====================validate====================")
             val_l2_full, val_l_inf = val_loop(val_loader, model, loss_fn, args)
             if args["tensorboard"]:

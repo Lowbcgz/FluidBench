@@ -34,9 +34,14 @@ def get_dataset(args):
     elif args["flow_name"] == "Darcy":
         if dataset_args["case_name"] == "PDEBench":
             dataset_args.pop("case_name")
-            train_dataset = PDEDarcyDataset(split="train", **dataset_args)
-            val_dataset = PDEDarcyDataset(split="val", **dataset_args)
-            test_dataset = PDEDarcyDataset(split="test", **dataset_args)
+            train_dataset = PDEDarcyDataset(filename="2D_DarcyFlow_beta1.0_Train.hdf5", split="train", **dataset_args)
+            val_dataset = PDEDarcyDataset(filename="2D_DarcyFlow_beta1.0_Train.hdf5", split="val", **dataset_args)
+            test_dataset = PDEDarcyDataset(filename="2D_DarcyFlow_beta1.0_Train.hdf5", split="test", **dataset_args)
+        elif dataset_args["case_name"] == "darcy":
+            dataset_args.pop("case_name")
+            train_dataset = PDEDarcyDataset(filename="darcy.hdf5", split="train", **dataset_args)
+            val_dataset = PDEDarcyDataset(filename="darcy.hdf5", split="val", **dataset_args)
+            test_dataset = PDEDarcyDataset(filename="darcy.hdf5", split="test", **dataset_args)
         else:
             raise NotImplementedError
     elif args["flow_name"] == "cavity":
@@ -95,6 +100,7 @@ def get_model_name(args):
               f"_ep{args['epochs']}")
     if args["model_name"] == "mpnn" or args["model_name"] == "mpnn_irregular":
         model_name = (f"{args['model_name']}" +
+                      f"_k{args['model']['neighbors']}" +
                       f"_layer{args['model']['hidden_layers']}" +
                       f"_dim{args['model']['hidden_features']}" +
                       f"_v{args['model']['var_id']}")
